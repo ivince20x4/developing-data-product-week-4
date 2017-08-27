@@ -1,0 +1,60 @@
+---
+title: "Predicting Fatalities from Vehicle Accidents in New Zealand"
+author: "Vincent Lee"
+date: "August 27, 2017"
+output:
+  slidy_presentation: default
+  ioslides_presentation: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Overview
+
+This application allows us to predict the fatalities that arises from motor accidents in New Zealand based on the number of population at given particular year. 
+
+The data is sourced from the Ministry of Transport, New Zealand. This statistics is compiled up to 2015. 
+
+To know more, please check out their website: 
+<http://www.transport.govt.nz/research/roadcrashstatistics/motorvehiclecrashesinnewzealand/>.
+
+## How does the data looks like?
+
+```{r, echo=FALSE}
+##the dataset is named as NZCrashes
+library(readxl)
+NZCrashes <- read_excel("C:/Users/USER/Desktop/NZCrashes.xls")
+```
+
+
+
+```{r crashes, echo = TRUE}
+
+summary(NZCrashes)
+```
+
+
+## Fitting prediction models
+
+- The model used is the linear regression model between population and fatatilies and we can compare between the predicted and the actual figures.
+
+```{r, echo= TRUE}
+model1 <- lm(NumberofFatalities ~ Per100000Population, data = NZCrashes)
+plot(model1)
+```
+
+```{r, echo = TRUE}
+plot(NZCrashes$Per100000Population, NZCrashes$NumberofFatalities,
+            xlab ="Population per 100000", ylab= "No of fatalities", xlim = c(249,773), ylim =c(232, 843))
+```
+
+
+## Application to visualise the prediction model
+
+Please check out the application for the results of the prediction model:
+<https://ivince20x4.shinyapps.io/predictnzfatalities/>
+
+You can change the population figure to find out the predicted value for the number of fatalities. 
+
